@@ -18,11 +18,11 @@ import os
 import cv2
 import numpy as np
 import requests
-from datetime import datetime
+from datetime import datetime, timedelta
+from zoneinfo import ZoneInfo
 
 # --- CONFIGURABLE ---
-# Example: 2026-05-18 09:18 radar tiles
-RADAR_TIMESTAMP = datetime(2026, 5, 18, 9, 18)
+RADAR_TIMESTAMP = datetime.now(ZoneInfo("Europe/Madrid")) - timedelta(minutes=120)
 ZOOM = 7  # Meteocat radar zoom level (7 or 8)
 TILE_SIZE = 1024  # px (for radar tiles at zoom 7)
 # Tiles to download (x, y indices) for a region covering Catalonia
