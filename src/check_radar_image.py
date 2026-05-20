@@ -21,6 +21,23 @@ import requests
 from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
 
+# --- IMAGE ANALYSIS ---
+def is_image_empty(image_path, threshold=0):
+    """
+    Returns True if the image at image_path is empty (all pixels are the same or below threshold).
+    For radar images, this means no info (all black or transparent).
+    """
+    img = cv2.imread(image_path, cv2.IMREAD_UNCHANGED)
+    if img is None:
+        raise FileNotFoundError(f"Image not found: {image_path}")
+    # If image has alpha channel, ignore it for content check
+    if img.ndim == 3 and img.shape[2] == 4:
+        img_rgb = img[:, :, :3]
+    else:
+        img_rgb = img
+    # Check if all pixels are zero (black/transparent)
+    return np.all(img_rgb <= threshold)
+
 # --- CONFIGURABLE ---
 RADAR_TIMESTAMP = datetime.now(ZoneInfo("Europe/Madrid")) - timedelta(minutes=120)
 ZOOM = 7  # Meteocat radar zoom level (7 or 8)
