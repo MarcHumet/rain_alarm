@@ -13,5 +13,6 @@ dependencies = [
     "numpy>=2.4.5",
     "opencv-python>=4.13.0.92",
     "pillow>=12.2.0",
+    "python-dotenv>=1.2.2",
     "requests>=2.34.2",
 ]
